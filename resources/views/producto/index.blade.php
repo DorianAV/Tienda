@@ -37,10 +37,13 @@
                                 <td>{{$producto->nombre}}</td>
                                 <td>{{{$producto->descripcion}}}</td>
                                 <td>{{$producto->precio}}</td>
-                                <td>{{$producto->imagen}}</td>
+                                <td>
+                                    <img src="{{asset('storage').'/'.$producto->imagen}}" width="200">
+                                </td>
                                 <td>{{$producto->stock}}</td>
                                 <td>{{$producto->categoria->nombre}}</td>
                                 <td>
+                                    <a href="{{route('producto.edit',$producto->id)}}" class="btn btn-warning">Editar</a>
                                     <form action="{{route('producto.destroy',$producto->id)}}" method="post">
                                         @csrf
                                         @method('DELETE')

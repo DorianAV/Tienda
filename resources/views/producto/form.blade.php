@@ -1,20 +1,22 @@
-<div class="container">
-    <form action="{{url('/producto')}}" method="POST" enctype="multipart/form-data">
-        @csrf
+
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre del Producto</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" required>
+            <input type="text" class="form-control" id="nombre" name="nombre" value="{{isset($producto->nombre)?$producto->nombre:''}}">
         </div>
         <div class="mb-3">
             <label for="descripcion" class="form-label">Descripción</label>
-            <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
+            <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required >{{isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
         </div>
         <div class="mb-3">
             <label for="precio" class="form-label">Precio</label>
-            <input type="number" class="form-control" id="precio" name="precio" step="0.01" required>
+            <input type="number" class="form-control" id="precio" name="precio" step="0.01" required value="{{isset($producto->precio)?$producto->precio:''}}">
         </div>
         <div class="mb-3">
             <label for="imagen" class="form-label">Imagen del Producto</label>
+            @if(isset($producto->imagen))
+                <br>
+                <img src="{{asset('storage').'/'.$producto->imagen}}" width="200">
+            @endif
             <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required>
         </div>
         <div class="mb-3">
@@ -30,7 +32,3 @@
         </div>
         <button type="submit" class="btn btn-primary">Enviar</button>
         <a href="{{route('producto.index')}}" class="btn btn-success">Regresar</a>
-    </form>
-
-</div>
-

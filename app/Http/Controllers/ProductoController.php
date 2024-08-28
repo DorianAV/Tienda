@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductoController extends Controller
 {
@@ -31,8 +32,11 @@ class ProductoController extends Controller
     {
         //
         $datos=request()->all();
+        if ($request->hasFile('imagen')) {
+            $datos['imagen']=$request->file('imagen')->store('uploads','public');
+        }
         Producto::create($datos);
-        return response()->json($datos);
+        return redirect()->route('producto.index')->with('mensaje','Producto agregado correctamente');
     }
 
     /**
@@ -46,17 +50,26 @@ class ProductoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Producto $producto)
+    public function edit($id)
     {
-        //
+        $producto=Producto::findOrFail($id);
+        return view('producto.edit',compact('producto'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request, $id)
     {
-        //
+        $producto=Producto::findOrFail($id);
+        $datos=$request->all();
+        if ($request->hasFile('imagen')) {
+            Storage::delete('public/'.$producto->imagen);
+            $datos['imagen']=$request->file('imagen')->store('uploads','public');
+        }
+        $producto->update($datos);
+        return redirect('producto')->with('mensaje','Producto modificado correctamente');
+
     }
 
     /**
