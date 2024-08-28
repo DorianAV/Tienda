@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
+Route::resource('producto',ProductoController::class)->middleware('auth');
+Route::resource('categoria',CategoriaController::class)->middleware('auth');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [ProductoController::class, 'index'])->name('home')->middleware('auth');

@@ -12,7 +12,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        $productos = Producto::with('categoria')->paginate(5);
+        return view('producto.index',compact('productos'));
     }
 
     /**
@@ -58,8 +59,10 @@ class ProductoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Producto $producto)
+    public function destroy($id)
     {
-        //
+        $producto = Producto::findOrFail($id);
+        $producto->delete();
+        return redirect()->route('producto.index')->with('mensaje','El producto ha sido eliminado');
     }
 }
