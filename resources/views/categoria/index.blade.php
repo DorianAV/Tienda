@@ -11,8 +11,8 @@
 
         <div class="card">
             <div class="card-header">
-                <a href="{{route('producto.create')}}" class="btn btn-success">Crear Nueva Producto</a>
-                <a href="{{route('categoria.index')}}" class="btn btn-primary">Categorias</a>
+                <a href="{{route('categoria.create')}}" class="btn btn-success">Crear Nueva Categoria</a>
+                <a href="{{route('producto.index')}}" class="btn btn-primary">Productos</a>
             </div>
             <div class="card-body">
                 <h4 class="card-title">Productos</h4>
@@ -23,25 +23,19 @@
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>Descripcion</th>
-                            <th>Precio</th>
-                            <th>Imagen</th>
-                            <th>Stock</th>
-                            <th>Categoria</th>
+
                             <th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($productos as $producto)
+                        @foreach($categorias as $categoria)
                             <tr>
-                                <td scope="row">{{$producto->id}}</td>
-                                <td>{{$producto->nombre}}</td>
-                                <td>{{{$producto->descripcion}}}</td>
-                                <td>{{$producto->precio}}</td>
-                                <td>{{$producto->imagen}}</td>
-                                <td>{{$producto->stock}}</td>
-                                <td>{{$producto->categoria->nombre}}</td>
+                                <td scope="row">{{$categoria->id}}</td>
+                                <td>{{$categoria->nombre}}</td>
+                                <td>{{{$categoria->descripcion}}}</td>
+
                                 <td>
-                                    <form action="{{route('producto.destroy',$producto->id)}}" method="post">
+                                    <form action="{{route('categoria.destroy',$categoria->id)}}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <input type="submit" value="Borrar" class="btn btn-danger">
@@ -54,11 +48,12 @@
 
                 </div>
             </div>
-            @if($productos->hasPages())
+            @if($categorias->hasPages())
                 <div class="card-footer text-muted">
-                    {{$productos->links()}}
+                    {{$categorias->links()}}
                 </div>
             @endif
+
         </div>
 
     </div>

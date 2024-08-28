@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
@@ -12,7 +13,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        $categorias = Categoria::paginate(5);
+        return view('categoria.index', compact('categorias'));
     }
 
     /**
@@ -20,7 +22,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('categoria.create');
     }
 
     /**
@@ -28,7 +30,9 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $datos=request()->all();
+        Categoria::create($datos);
+        return redirect()->route('categoria.index');
     }
 
     /**
@@ -58,8 +62,16 @@ class CategoriaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Categoria $categoria)
+    public function destroy($id)
     {
-        //
+        $categoria = Categoria::findOrFail($id);
+        $producto= Producto::where('categoria_id', $id)->count();
+        if ($producto==0) {
+            $categoria->delete();
+            return redirect()->route('categoria.index')->with('mensaje', 'Categoría eliminada correctamente.');
+        } else {
+
+            return redirect()->route('categoria.index')->with('mensaje', 'No se puede eliminar la categoría porque tiene productos asociados.');
+        }
     }
 }

@@ -21,7 +21,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        //
+        return view('producto.create');
     }
 
     /**
@@ -30,6 +30,9 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         //
+        $datos=request()->all();
+        Producto::create($datos);
+        return response()->json($datos);
     }
 
     /**
