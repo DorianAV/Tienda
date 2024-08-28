@@ -35,6 +35,7 @@
                                 <td>{{{$categoria->descripcion}}}</td>
 
                                 <td>
+                                    <a href="{{route('categoria.edit',$categoria->id)}}" class="btn btn-warning">Editar</a>
                                     <form action="{{route('categoria.destroy',$categoria->id)}}" method="post">
                                         @csrf
                                         @method('DELETE')

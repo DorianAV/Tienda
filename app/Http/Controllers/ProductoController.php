@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +23,8 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view('producto.create');
+        $categorias=Categoria::pluck('nombre','id');
+        return view('producto.create',compact('categorias'));
     }
 
     /**
@@ -53,7 +55,8 @@ class ProductoController extends Controller
     public function edit($id)
     {
         $producto=Producto::findOrFail($id);
-        return view('producto.edit',compact('producto'));
+        $categorias=Categoria::pluck('nombre','id');
+        return view('producto.edit',compact('producto','categorias'));
     }
 
     /**

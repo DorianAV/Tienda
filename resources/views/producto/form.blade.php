@@ -19,17 +19,16 @@
         <br>
         <img src="{{asset('storage').'/'.$producto->imagen}}" width="200">
     @endif
-    <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required>
+    <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*">
 </div>
 <div class="mb-3">
     <label for="categoria_id" class="form-label">Categoría</label>
     <select class="form-select" id="categoria_id" name="categoria_id" required>
-        <option value="">Selecciona una categoría</option>
-        <option value="1">Electrónica</option>
-        <option value="2">Ropa</option>
-        <option value="3">Hogar</option>
-        <option value="5">Juguetes</option>
-        <option value="4">Otros</option>
+        @foreach($categorias as $id => $nombre)
+            <option value="{{$id}}" {{ isset($producto->categoria_id) && $producto->categoria_id == $id ? 'selected' : '' }}>
+                {{$nombre}}
+            </option>
+        @endforeach
     </select>
 </div>
 <button type="submit" class="btn btn-primary">Enviar</button>

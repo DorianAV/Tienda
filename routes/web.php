@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,11 +17,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect('/home');
+    }
     return view('auth.login');
 });
-Route::resource('producto',ProductoController::class)->middleware('auth');
-Route::resource('categoria',CategoriaController::class)->middleware('auth');
-
 Auth::routes();
 
-Route::get('/home', [ProductoController::class, 'index'])->name('home')->middleware('auth');
+Route::middleware(['auth'])->group(function () {
+    Route::resource('producto', ProductoController::class);
+    Route::resource('categoria', CategoriaController::class);
+    Route::get('/home', [ProductoController::class, 'index'])->name('home');
+});
