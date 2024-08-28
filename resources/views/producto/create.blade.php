@@ -5,9 +5,5 @@
             @csrf
             @include('producto.form')
         </form>
-
     </div>
-
-
-
 @endsection

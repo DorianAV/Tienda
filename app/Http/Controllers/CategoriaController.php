@@ -46,17 +46,21 @@ class CategoriaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Categoria $categoria)
+    public function edit($id)
     {
-        //
+        $categoria=Categoria::findOrFail($id);
+        return view('categoria.edit', compact('categoria'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Categoria $categoria)
+    public function update(Request $request, $id)
     {
-        //
+        $categoria=Categoria::findOrFail($id);
+        $datos=request()->all();
+        $categoria->update($datos);
+        return redirect('categoria')->with('mensaje','Categoria Actualizada Correctamente');
     }
 
     /**

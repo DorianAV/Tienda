@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <form action="{{route('producto.update',$producto->id)}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('categoria.update',$categoria->id)}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
-            @include('producto.form')
+            @include('categoria.form')
         </form>
     </div>
 @endsection
