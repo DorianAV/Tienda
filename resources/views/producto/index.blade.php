@@ -42,9 +42,10 @@
                                 </td>
                                 <td>{{$producto->stock}}</td>
                                 <td>{{$producto->categoria->nombre}}</td>
-                                <td>
-                                    <a href="{{route('producto.edit',$producto->id)}}" class="btn btn-warning">Editar</a>
-                                    <form action="{{route('producto.destroy',$producto->id)}}" method="post">
+                                <td class="text-nowrap">
+                                    <a href="{{route('producto.stock',$producto->id)}}" class="btn btn-success d-inline-block">Actualizar Stock</a>
+                                    <a href="{{route('producto.edit',$producto->id)}}" class="btn btn-warning d-inline-block">Editar</a>
+                                    <form action="{{route('producto.destroy',$producto->id)}}" method="post" class="d-inline-block">
                                         @csrf
                                         @method('DELETE')
                                         <input type="submit" value="Borrar" class="btn btn-danger">

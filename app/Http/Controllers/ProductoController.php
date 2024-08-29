@@ -76,6 +76,16 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $campos=[
+          'nombre'=>'required|string|max:100',
+          'descripcion'=>'required|string|max:1000',
+          'precio'=>'required|numeric',
+          'categoria_id'=>'required|integer|exists:categorias,id',
+        ];
+        $mensaje=[
+            'required'=>'El :attribute es requerido',
+        ];
+        $this->validate($request, $campos, $mensaje);
         $producto=Producto::findOrFail($id);
         $datos=$request->all();
         if ($request->hasFile('imagen')) {
@@ -95,5 +105,26 @@ class ProductoController extends Controller
         $producto = Producto::findOrFail($id);
         $producto->delete();
         return redirect()->route('producto.index')->with('mensaje','El producto ha sido eliminado');
+    }
+    public function stock($id)
+    {
+        $producto=Producto::findOrFail($id);
+        return view('producto.stock',compact('producto'));
+    }
+    public function updateStock(Request $request,$id){
+
+        $producto=Producto::findOrFail($id);
+        $campos=[
+            'stock'=>'required|numeric|min:0'
+        ];
+        $mensaje=[
+            'required'=>'El :attribute es requerido',
+            'min'=>'El :attribute debe ser mayor a 0',
+        ];
+        $this->validate($request, $campos, $mensaje);
+        $producto->update(['stock' => $request->input('stock')]);
+
+        return redirect()->route('producto.index')->with('mensaje', 'Stock actualizado correctamente');
+
     }
 }

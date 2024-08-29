@@ -27,5 +27,7 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
     Route::resource('producto', ProductoController::class);
     Route::resource('categoria', CategoriaController::class);
+    Route::get('/producto/stock/{producto}', [ProductoController::class, 'stock'])->name('producto.stock');
+    Route::patch('/producto/update-stock/{producto}', [ProductoController::class, 'updateStock'])->name('producto.updateStock');
     Route::get('/home', [ProductoController::class, 'index'])->name('home');
 });
