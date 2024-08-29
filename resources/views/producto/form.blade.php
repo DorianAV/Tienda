@@ -6,11 +6,11 @@
 <div class="mb-3">
     <label for="descripcion" class="form-label">Descripción</label>
     <textarea class="form-control" id="descripcion" name="descripcion" rows="3"
-              required>{{isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
+              >{{isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
 </div>
 <div class="mb-3">
     <label for="precio" class="form-label">Precio</label>
-    <input type="number" class="form-control" id="precio" name="precio" step="0.01" required
+    <input type="number" class="form-control" id="precio" name="precio" step="0.01"
            value="{{isset($producto->precio)?$producto->precio:''}}">
 </div>
 <div class="mb-3">
@@ -23,7 +23,7 @@
 </div>
 <div class="mb-3">
     <label for="categoria_id" class="form-label">Categoría</label>
-    <select class="form-select" id="categoria_id" name="categoria_id" required>
+    <select class="form-select" id="categoria_id" name="categoria_id" >
         @foreach($categorias as $id => $nombre)
             <option value="{{$id}}" {{ isset($producto->categoria_id) && $producto->categoria_id == $id ? 'selected' : '' }}>
                 {{$nombre}}
