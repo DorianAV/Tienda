@@ -12,17 +12,13 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <div>
-                    <a href="{{ route('producto.create') }}" class="btn btn-success">Crear Nuevo Producto</a>
-                    <a href="{{ route('categoria.index') }}" class="btn btn-primary">Categorías</a>
+                    <a href="{{route('producto.index')}}" class="btn btn-success">Regresar</a>
                 </div>
                 <div class="d-flex align-items-center">
                     <input type="text" class="form-control me-2" placeholder="Buscar productos"
                            style="max-width: 200px;">
-                    <a href="{{ route('producto.trashed') }}" class="btn btn-danger">Papelera</a>
                 </div>
             </div>
-
-
             <div class="card-body">
                 <h4 class="card-title">Productos</h4>
                 @if($productos->isEmpty())
@@ -30,6 +26,7 @@
                 @endif
                 @if($productos->isNotEmpty())
                     <div class="table-responsive">
+
                         <table class="table table-striped table-inverse table-responsive">
                             <thead class="thead-inverse">
                             <tr>
@@ -56,15 +53,16 @@
                                     <td>{{$producto->stock}}</td>
                                     <td>{{$producto->categoria->nombre}}</td>
                                     <td class="text-nowrap">
-                                        <a href="{{route('producto.stock',$producto->id)}}"
-                                           class="btn btn-success d-inline-block">Actualizar Stock</a>
-                                        <a href="{{route('producto.edit',$producto->id)}}"
-                                           class="btn btn-warning d-inline-block">Editar</a>
-                                        <form action="{{route('producto.destroy',$producto->id)}}" method="post"
-                                              class="d-inline-block">
+                                        <form action="{{ route('producto.forceDelete', $producto->id) }}" method="POST"
+                                              style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <input type="submit" value="Borrar" class="btn btn-danger">
+                                            <button type="submit" class="btn btn-warning">Eliminar</button>
+                                        </form>
+                                        <form action="{{ route('producto.restore', $producto->id) }}" method="POST"
+                                              style="display:inline;">
+                                            @csrf
+                                            <button type="submit" class="btn btn-success">Restaurar</button>
                                         </form>
                                     </td>
                                 </tr>

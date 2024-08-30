@@ -78,4 +78,21 @@ class CategoriaController extends Controller
             return redirect()->route('categoria.index')->with('mensaje', 'No se puede eliminar la categoría porque tiene productos asociados.');
         }
     }
+    public function trashed()
+    {
+        $categorias = Categoria::onlyTrashed()->paginate(5);
+        return view('categoria.trashed',compact('categorias'));
+    }
+
+    public function restore($id)
+    {
+        $categoria = Categoria::where('id',$id)->withTrashed()->restore();
+        return redirect()->route('categoria.trashed')->with('mensaje', 'Categoria restaurado correctamente');
+    }
+
+    public function forceDelete($id)
+    {
+        $categoria = Categoria::where('id',$id)->withTrashed()->forceDelete();
+        return redirect()->route('categoria.trashed')->with('mensaje', 'Categoria eliminado correctamente');
+    }
 }

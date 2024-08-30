@@ -12,14 +12,13 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <div>
-                    <a href="{{route('categoria.create')}}" class="btn btn-success">Crear Nueva Categoria</a>
-                    <a href="{{route('producto.index')}}" class="btn btn-primary">Productos</a>
+                    <a href="{{route('categoria.index')}}" class="btn btn-success">Regresar</a>
                 </div>
                 <div class="d-flex align-items-center">
                     <input type="text" class="form-control me-2" placeholder="Buscar productos"
                            style="max-width: 200px;">
-                    <a href="{{ route('categoria.trashed') }}" class="btn btn-danger">Papelera</a>
                 </div>
+
             </div>
             <div class="card-body">
                 <h4 class="card-title">Categorias</h4>
@@ -46,14 +45,14 @@
                                     <td>{{{$categoria->descripcion}}}</td>
 
                                     <td class="text-nowrap">
-                                        <a href="{{route('categoria.edit',$categoria->id)}}"
-                                           class="btn btn-warning d-inline-block">Editar</a>
-                                        <form action="{{route('categoria.destroy',$categoria->id)}}"
-                                              class="d-inline-block"
-                                              method="post">
+                                        <form action="{{ route('categoria.forceDelete', $categoria->id) }}" method="POST" class="d-inline-block">
                                             @csrf
                                             @method('DELETE')
-                                            <input type="submit" value="Borrar" class="btn btn-danger d-inline-block">
+                                            <button type="submit" class="btn btn-warning">Eliminar</button>
+                                        </form>
+                                        <form action="{{ route('categoria.restore', $categoria->id) }}" method="POST" class="d-inline-block">
+                                            @csrf
+                                            <button type="submit" class="btn btn-success">Restaurar</button>
                                         </form>
                                     </td>
                                 </tr>
