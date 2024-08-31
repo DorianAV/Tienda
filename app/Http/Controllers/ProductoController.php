@@ -144,7 +144,9 @@ class ProductoController extends Controller
 
     public function forceDelete($id)
     {
-        $producto = Producto::where('id',$id)->withTrashed()->forceDelete();
+        $producto = Producto::withTrashed()->where('id',$id);
+//        Storage::delete('public/' . $producto->imagen);
+        $producto->forceDelete();
         return redirect()->route('producto.trashed')->with('mensaje', 'Producto eliminado correctamente');
     }
 }
